@@ -11,11 +11,16 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('add1')
-  async add1(@Body('numbers') numbers: number[]): Promise<number> {
-    const response = await axios.post('http://localhost:3001/math/add', {
-      numbers,
-    });
-    return response.data;
+  @Post('sum1')
+  async sum1(@Body('numbers') numbers: number[]): Promise<number> {
+    try {
+      const response = await axios.post('http://localhost:3001/math/sum', {
+        numbers,
+      });
+      return response.data;
+    } catch (error) {
+      console.log('Error calling the micro service', error);
+      throw error;
+    }
   }
 }
